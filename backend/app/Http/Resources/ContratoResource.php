@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Repositories\ImovelRepository;
+use App\Models\Imovel;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ContratoResource extends JsonResource
@@ -17,7 +17,7 @@ class ContratoResource extends JsonResource
     {
         return [
             'imovel' => [
-                'status_label' => ImovelRepository::STATUS[$this->imovel->status],
+                'status_label' => Imovel::STATUS[$this->imovel->status],
                 'rua' => $this->imovel->rua,
                 'numero' => $this->imovel->numero,
                 'complemento' => $this->imovel->complemento,

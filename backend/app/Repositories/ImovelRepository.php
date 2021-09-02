@@ -10,20 +10,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ImovelRepository
 {
-    const STATUS_DISPONIVEL = 0;
-    const STATUS_CONTRATADO = 1;
-
-    const STATUS = [
-        self::STATUS_DISPONIVEL => 'Disponível',
-        self::STATUS_CONTRATADO => 'Contratado',
-    ];
-
-    const ORDER_BY = ['email_proprietario', 'cidade'];
-
-
     public function list(Request $request)
     {
-        $orderBy = in_array($request->orderBy, self::ORDER_BY) ? $request->orderBy : null;
+        $orderBy = in_array($request->orderBy, Imovel::ORDER_BY) ? $request->orderBy : null;
         $sortedBy = in_array($request->sortedBy, ['asc', 'desc']) ? $request->sortedBy : "desc";
 
         $imoveis = Imovel::when($orderBy, function ($query, $orderBy) use ($sortedBy) {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Repositories\ImovelRepository;
+use App\Models\Imovel;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ImovelResource extends JsonResource
@@ -16,7 +16,7 @@ class ImovelResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'status_label' => ImovelRepository::STATUS[$this->status]
+            'status_label' => Imovel::STATUS[$this->status]
         ]+parent::toArray($request);
     }
 }

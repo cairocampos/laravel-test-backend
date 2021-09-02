@@ -36,4 +36,11 @@ class StoreUpdateImovelRequest extends FormRequest
             'total_divisoes'     => 'required|integer'
         ];
     }
+
+    public function prepareForValidation()
+    {
+        return [
+            'cep' => preg_replace('/\D/', '', $this->cep)
+        ];
+    }
 }

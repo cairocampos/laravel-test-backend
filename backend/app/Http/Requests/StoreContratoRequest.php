@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Contrato;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -24,20 +25,31 @@ class StoreContratoRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'imovel_id'         => 'required|exists:imoveis,id',
-            'tipo_pessoa'       => 'required|in:pf,pj',
+            'tipo_pessoa'       => ['required', Rule::in([
+                Contrato::TIPO_PESSOA_FISICA,
+                Contrato::TIPO_PESSOA_JURIDICA
+            ])],
             'nome_contratante'  => 'required|string',
             'email_contratante' => 'required|email',
-            'documento'         => 'required'
+            'cpf_cnpj'          => ['required'],
         ];
+
+        if(request('tipo_pessoa') == 'pf')
+            $rules['cpf_cnpj'][] = 'regex:/^([0-9]{11})$/';
+        elseif(request('tipo_pessoa') == 'pj')
+            $rules['cpf_cnpj'][] = 'regex:/^([0-9]{14})$/';
+
+        return $rules;
     }
 
     public function prepareForValidation()
     {
-        $documento = preg_replace("/([^(0-9)])/", "", $this->documento);
+        $documento = preg_replace('/\D/', '', $this->cpf_cnpj);
         $this->merge([
-            'documento' => $documento
+            'cpf_cnpj'   => $documento,
+            'tipo_pessoa' => strtolower($this->tipo_pessoa)
         ]);
     }
 

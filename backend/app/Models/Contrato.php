@@ -11,21 +11,24 @@ class Contrato extends Model
 
     protected $fillable = [
         'tipo_pessoa',
-        'documento',
+        'cpf_cnpj',
         'email_contratante',
         'nome_contratante',
         'imovel_id'
     ];
+
+    const TIPO_PESSOA_FISICA = 'pf';
+    const TIPO_PESSOA_JURIDICA = 'pj';
 
     public function imovel()
     {
         return $this->belongsTo(Imovel::class);
     }
 
-    public function setDocumentoAttribute($value)
+    public function setCpfCnpjAttribute($value)
     {
-        $documento = preg_replace("/([^(0-9)])/", "", $value);
+        $documento = preg_replace('/\D/', '', $value);
 
-        $this->attributes['documento'] = $documento;
+        $this->attributes['cpf_cnpj'] = $documento;
     }
 }

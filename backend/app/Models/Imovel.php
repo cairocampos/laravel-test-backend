@@ -14,6 +14,7 @@ class Imovel extends Model
 
     protected $fillable = [
         'email_proprietario',
+        'cep',
         'rua',
         'bairro',
         'numero',
@@ -21,13 +22,22 @@ class Imovel extends Model
         'cidade',
         'estado',
         'cor',
-        'numero',
         'total_divisoes'
     ];
 
     protected $attributes = [
         'status' => 0
     ];
+
+    const STATUS_DISPONIVEL = 0;
+    const STATUS_CONTRATADO = 1;
+
+    const STATUS = [
+        self::STATUS_DISPONIVEL => 'Disponível',
+        self::STATUS_CONTRATADO => 'Contratado',
+    ];
+
+    const ORDER_BY = ['email_proprietario', 'cidade'];
 
     public function contrato()
     {

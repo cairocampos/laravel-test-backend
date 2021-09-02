@@ -16,6 +16,7 @@ class CreateImoveisTable extends Migration
         Schema::create('imoveis', function (Blueprint $table) {
             $table->id();
             $table->string('email_proprietario');
+            $table->char('cep',8);
             $table->string('rua');
             $table->string('bairro');
             $table->string('numero');

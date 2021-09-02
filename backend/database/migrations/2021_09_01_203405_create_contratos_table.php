@@ -17,7 +17,7 @@ class CreateContratosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('imovel_id');
             $table->char('tipo_pessoa', 2);
-            $table->string('documento');
+            $table->string('cpf_cnpj');
             $table->string('email_contratante');
             $table->string('nome_contratante');
             $table->timestamps();
