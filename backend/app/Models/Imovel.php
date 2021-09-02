@@ -33,8 +33,8 @@ class Imovel extends Model
     const STATUS_CONTRATADO = 1;
 
     const STATUS = [
-        self::STATUS_DISPONIVEL => 'Disponível',
-        self::STATUS_CONTRATADO => 'Contratado',
+        'disponivel' => self::STATUS_DISPONIVEL,
+        'contratado' => self::STATUS_CONTRATADO,
     ];
 
     const ORDER_BY = ['email_proprietario', 'cidade'];
