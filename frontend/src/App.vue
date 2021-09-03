@@ -18,15 +18,39 @@
 <script lang="ts">
 import HeaderPage from '@/components/header/HeaderPage.vue';
 import Menu from '@/components/menu/Menu.vue';
-import { defineComponent } from '@vue/runtime-core';
+import { defineComponent, onMounted } from '@vue/runtime-core';
+import {computed} from 'vue';
+import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
+import { api } from './services';
+
+import useAlert from './composables/useAlert';
+
 export default defineComponent({
   components: {
     HeaderPage,
     Menu,
   },
-  computed: {
-    isLogin() {
-      return this.$route.name === 'Login'
+  setup() {
+    const route = useRoute();
+    const store = useStore();
+    const {errorAlert} = useAlert();
+
+    const isLogin = computed(() => {
+      return route.name === 'Login'
+    });
+
+    onMounted(async () => {
+      try {
+        const response = await api.get('/');
+        store.commit('UPDATE_SPEC', response.data);
+      } catch (error) {
+        errorAlert(error);
+      }
+    });
+
+    return {
+      isLogin
     }
   }
 })

@@ -15,8 +15,6 @@ class ImovelResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'status_label' => Imovel::STATUS[$this->status]
-        ]+parent::toArray($request);
+        return parent::toArray($request);
     }
 }

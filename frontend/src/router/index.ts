@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '../views/Home.vue'
-import NovoImovel from '../views/NovoImovel.vue'
+import AdicionarImovel from '../views/AdicionarImovel.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,7 +10,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path:'/imoveis/novo',
-    component: NovoImovel
+    component: AdicionarImovel
   }
 
 ]

@@ -39,8 +39,8 @@ class StoreUpdateImovelRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        return [
+        $this->merge([
             'cep' => preg_replace('/\D/', '', $this->cep)
-        ];
+        ]);
     }
 }

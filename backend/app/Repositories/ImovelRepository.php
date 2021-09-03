@@ -33,7 +33,8 @@ class ImovelRepository
             ], Response::HTTP_CREATED);
 
         } catch (\Exception $e) {
-            return server_error();
+            return response()->json(['message' => $e->getMessage()]);
+            // return server_error();
         }
     }
 

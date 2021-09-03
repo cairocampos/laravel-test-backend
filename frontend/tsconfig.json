@@ -32,7 +32,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-, "src/components/header/HeaderPage.vue"  ],
+, "src/components/header/HeaderPage.vue", "src/components/imoveis/TabelaImoveis.vue", "src/views/AdicionarImovel.vue"  ],
   "exclude": [
     "node_modules"
   ]

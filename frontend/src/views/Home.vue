@@ -8,45 +8,53 @@
     <div>
       <div class="text-right">
       </div>
-      <table class="w-full">
-        <thead>
-          <th>Email proprietário</th>
-          <th>Endereço</th>
-          <th>Status</th>
-          <th>Ações</th>
-        </thead>
-        <tbody>
-          <tr v-for="item in 10" :key="item">
-            <td class="text-sm">cairocampos98@gmail.com</td>
-            <td class="text-sm">Avenida B, 138, Governador Valadares, MG</td>
-            <td>
-              <span :class="[`bg-${item == 2 ? 'red' : 'green'}-500 p-2 rounded-md text-white text-xs`]">
-                {{item == 2 ? 'Contratado' : 'Disponível'}}
-              </span>
-            </td>
-            <td>
-              <button class="btn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+      <transition-group tag="div">
+      <Loading v-if="loading" />
+        <template v-else-if="!loading && imoveis && imoveis.length">
+          <TabelaImoveis :modelValue="imoveis" @update:modelValue="imoveis = $event"/>
+        </template>
+        <p v-else>Nenhum resultado encontrado.</p>
+      </transition-group>
+
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core"
+import { defineComponent, onMounted, ref } from "@vue/runtime-core"
 import HeaderTitle from '@/components/header/HeaderTitle.vue'
+import { api } from "@/services"
+import TabelaImoveis from "@/components/imoveis/TabelaImoveis.vue"
+import useAlert from "@/composables/useAlert"
 export default defineComponent({
   components: {
-    HeaderTitle
+    HeaderTitle,
+    TabelaImoveis
   },
   setup() {
-    //
+    const imoveis = ref([]);
+    const loading = ref<boolean>(false);
+    const {errorAlert} = useAlert()
+
+    const getImoveis = async () => {
+      loading.value = true;
+      try {
+        const response = await api.get('/imoveis');
+        imoveis.value = response.data.data;
+      } catch (error) {
+        errorAlert(error)
+      } finally {
+        loading.value = false;
+      }
+    }
+
+    onMounted(getImoveis);
+
+    return {
+      imoveis,
+      loading
+    }
   }
 })
 </script>

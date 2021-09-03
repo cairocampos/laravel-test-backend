@@ -1,9 +1,9 @@
 <template>
   <div class="loading">
-    <span class="bg-purple-900"></span>
-    <span class="bg-purple-900"></span>
-    <span class="bg-purple-900"></span>
-    <span class="bg-purple-900"></span>
+    <span class="bg-blue-500"></span>
+    <span class="bg-blue-500"></span>
+    <span class="bg-blue-500"></span>
+    <span class="bg-blue-500"></span>
   </div>
 </template>
 
