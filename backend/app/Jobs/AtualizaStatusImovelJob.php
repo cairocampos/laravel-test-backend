@@ -36,6 +36,8 @@ class AtualizaStatusImovelJob implements ShouldQueue
     public function handle()
     {
         if($this->contratado)
-            $this->imovel->update(['status', Imovel::STATUS_CONTRATADO]);
+            $this->imovel->status = Imovel::STATUS_CONTRATADO;
+
+            $this->imovel->save();
     }
 }

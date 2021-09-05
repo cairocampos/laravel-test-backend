@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "@vue/runtime-core"
+import { defineComponent, onMounted, ref } from "@vue/runtime-core"
 import HeaderTitle from '@/components/header/HeaderTitle.vue'
 import { api } from "@/services"
 import TabelaImoveis from "@/components/imoveis/TabelaImoveis.vue"
