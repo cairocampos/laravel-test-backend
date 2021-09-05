@@ -17,7 +17,7 @@ class ImovelRepository
 
         $imoveis = Imovel::when($orderBy, function ($query, $orderBy) use ($sortedBy) {
             return $query->orderBy($orderBy, $sortedBy);
-        })->paginate();
+        })->latest()->paginate();
 
         return ImovelResource::collection($imoveis);
     }

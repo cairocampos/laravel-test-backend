@@ -12,7 +12,7 @@
       <transition-group tag="div">
       <Loading v-if="loading" />
         <template v-else-if="!loading && imoveis && imoveis.length">
-          <TabelaImoveis :modelValue="imoveis" @update:modelValue="imoveis = $event"/>
+          <TabelaImoveis :modelValue="imoveis" :sortable="sortable" @sort-imoveis="updateSortable"/>
         </template>
         <p v-else>Nenhum resultado encontrado.</p>
       </transition-group>
@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@vue/runtime-core"
+import { defineComponent, onMounted, ref, watch } from "@vue/runtime-core"
 import HeaderTitle from '@/components/header/HeaderTitle.vue'
 import { api } from "@/services"
 import TabelaImoveis from "@/components/imoveis/TabelaImoveis.vue"
@@ -33,13 +33,14 @@ export default defineComponent({
   },
   setup() {
     const imoveis = ref([]);
+    const sortable = ref({orderBy:"",sortedBy:""});
     const loading = ref<boolean>(false);
     const {errorAlert} = useAlert()
 
     const getImoveis = async () => {
       loading.value = true;
       try {
-        const response = await api.get('/imoveis');
+        const response = await api.get('/imoveis', {params: sortable.value});
         imoveis.value = response.data.data;
       } catch (error) {
         errorAlert(error)
@@ -48,11 +49,28 @@ export default defineComponent({
       }
     }
 
+    const updateSortable = async (column:string) => {
+      if(sortable.value.orderBy == column) {
+        if(sortable.value.sortedBy == 'asc') {
+          sortable.value = Object.assign(sortable.value, {sortedBy: 'desc'});
+          console.log(sortable.value);
+        } else {
+          sortable.value = {orderBy: "", sortedBy:""};
+        }
+      } else {
+        sortable.value = {orderBy:column,sortedBy:'asc'};
+      }
+
+      getImoveis();
+    }
+
     onMounted(getImoveis);
 
     return {
       imoveis,
-      loading
+      loading,
+      updateSortable,
+      sortable
     }
   }
 })

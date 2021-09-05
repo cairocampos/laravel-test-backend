@@ -2,15 +2,23 @@
     <div>
         <table class="w-full">
             <thead>
-                <th>Email proprietário</th>
+                <th 
+                    class="flex items-center justify-between cursor-pointer" 
+                    @click="sortImoveis('email_proprietario')">Email proprietário 
+                    <ArrowIcon v-if="sortable.orderBy == 'email_proprietario'" :position="sortable.sortedBy" />
+                </th>
                 <th>Endereço</th>
-                <th>Status</th>
+                <th 
+                    class="flex items-center justify-between cursor-pointer" 
+                    @click="sortImoveis('status')">Status 
+                    <ArrowIcon v-if="sortable.orderBy == 'status'" :position="sortable.sortedBy" />    
+                </th>
                 <th></th>
             </thead>
             <tbody>
                 <tr v-for="(imovel, index) in imoveis" :key="imovel.id">
                 <td class="text-sm">{{imovel.email_proprietario}}</td>
-                <td class="text-sm">{{ imovel.rua }}</td>
+                <td class="text-sm endereco">{{ formataEndereco(imovel) }}</td>
                 <td>
                     <span :class="[`bg-${imovel.status == statusImovelContratado ? 'red' : 'green'}-500 p-2 rounded-md text-white text-xs`]">
                     {{imovel.status == statusImovelContratado ? 'Contratado' : 'Disponível'}}
@@ -51,6 +59,7 @@ import {computed, ref} from 'vue';
 import { useStore } from "vuex";
 
 import useAlert from '@/composables/useAlert'
+import useEndereco from '@/composables/useEndereco'
 import { SweetAlertResult } from "sweetalert2";
 import { api } from "@/services";
 
@@ -58,12 +67,12 @@ import AdicionarContrato from './AdicionarContrato.vue'
 import { IImovel } from "@/types/IImovel";
 
 export default defineComponent({
-    props: ['modelValue'],
-    emits: ['update:modelValue'],
+    props: ['modelValue', 'sortable'],
+    emits: ['update:modelValue','sort-imoveis'],
     components: {
         AdicionarContrato
     },
-    setup(props) {
+    setup(props, {emit}) {
         const {confirmAlert, errorAlert, successAlert} = useAlert();
         const store = useStore();
         const imoveis = ref<IImovel[]>(props.modelValue);
@@ -108,18 +117,31 @@ export default defineComponent({
             contratoImovel.value = {};
         }
 
+        const sortImoveis = (column:string) => {
+            emit('sort-imoveis', column);
+        }
+
+        const {formataEndereco} = useEndereco();
+
         return {
             imoveis,
             statusImovelContratado,
             contratoImovel,
             deletarImovel,
             adicionarContrato,
-            atualizaStatusImovel
+            atualizaStatusImovel,
+            formataEndereco,
+            sortImoveis
         }
     },
 });
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+td.endereco {
+    max-width: 350px;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+}
 </style>

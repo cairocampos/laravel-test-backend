@@ -37,7 +37,7 @@ class Imovel extends Model
         'contratado' => self::STATUS_CONTRATADO,
     ];
 
-    const ORDER_BY = ['email_proprietario', 'cidade'];
+    const ORDER_BY = ['email_proprietario', 'status'];
 
     public function contrato()
     {
