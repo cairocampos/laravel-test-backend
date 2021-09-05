@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Resources\ContratoResource;
+use App\Jobs\AtualizaStatusImovelJob;
 use App\Models\Contrato;
 use App\Models\Imovel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -22,6 +23,7 @@ class ContratoRepository
             }
 
             $contrato = Contrato::create($params);
+            dispatch(new AtualizaStatusImovelJob($imovel, true));
             $contrato->load('imovel');
 
             return response()->json([

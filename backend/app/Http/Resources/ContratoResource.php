@@ -17,7 +17,7 @@ class ContratoResource extends JsonResource
     {
         return [
             'imovel' => [
-                'status_label' => Imovel::STATUS[$this->imovel->status],
+                'status' => $this->imovel->status,
                 'rua' => $this->imovel->rua,
                 'numero' => $this->imovel->numero,
                 'complemento' => $this->imovel->complemento,

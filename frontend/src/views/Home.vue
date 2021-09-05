@@ -16,7 +16,6 @@
         </template>
         <p v-else>Nenhum resultado encontrado.</p>
       </transition-group>
-
     </div>
   </div>
 </template>

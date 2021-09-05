@@ -1,5 +1,6 @@
 <template>
   <div class="bg-gray-100 min-h-screen w-full">
+    <div id="modal" class="fixed top-0 left-0 z-50"></div>
     <template v-if="!isLogin">
     <HeaderPage />
     <div class="flex">
@@ -73,17 +74,24 @@ html, body {
 .fade-leave-active {
   transition: all 0.3s;
 }
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 </style>
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete

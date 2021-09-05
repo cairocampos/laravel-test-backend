@@ -36,16 +36,16 @@ export default function useAlert() {
         alert("", text, "info");
     }
 
-    // function confirm(title:string, text:string, callback:Promise<SweetAlertResult<Awaited<any>>) {
-    //     Swal.fire({
-    //         title,
-    //         text,
-    //         icon:"question",
-    //         showCancelButton: true,
-    //         confirmButtonText: "Sim",
-    //         cancelButtonText:"Cancelar"
-    //     }).then(callback);
-    // }
+    function confirmAlert(text:string, callback:any) {
+        Swal.fire({
+            title: 'Atenção!',
+            text,
+            icon:"question",
+            showCancelButton: true,
+            confirmButtonText: "Sim",
+            cancelButtonText:"Cancelar"
+        }).then(callback);
+    }
 
 
     function getMessage(error: AxiosError): string {
@@ -74,7 +74,7 @@ export default function useAlert() {
         successAlert,
         warningAlert,
         infoAlert,
-        // confirm,
+        confirmAlert,
         errorAlert
     }
 }

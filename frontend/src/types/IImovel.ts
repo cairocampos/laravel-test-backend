@@ -1,5 +1,6 @@
 export interface IImovel {
     id?:number;
+    status?:number;
     bairro:string;
     cep:string;
     rua:string;
