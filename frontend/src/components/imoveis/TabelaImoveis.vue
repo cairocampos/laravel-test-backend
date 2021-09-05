@@ -27,6 +27,7 @@
                     </button>
 
                     <button
+                        v-if="imovel.status != statusImovelContratado"
                         class="btn"
                         @click="adicionarContrato(imovel)"
                     >
@@ -39,7 +40,7 @@
             </tbody>
         </table>
         <teleport to="#modal" v-if="Object.keys(contratoImovel).length">
-            <AdicionarContrato  @contrato-adicionado="refreshImovel" :contratoImovel="contratoImovel" />
+            <AdicionarContrato  @contrato-adicionado="atualizaStatusImovel" :contratoImovel="contratoImovel" />
         </teleport>
     </div>
 </template>
@@ -98,7 +99,7 @@ export default defineComponent({
         const atualizaStatusImovel = (imovel_id: number) => {
             imoveis.value = imoveis.value.map(imovel =>  {
                 if(imovel.id === imovel_id) {
-                    imovel.status == store.state.spec.imoveis.status.contratado
+                    imovel.status = store.state.spec.imoveis.status.contratado
                 }
 
                 return imovel;
@@ -106,11 +107,6 @@ export default defineComponent({
 
             contratoImovel.value = {};
         }
-
-
-        setTimeout(() => {
-            atualizaStatusImovel(2);
-        }, 1500);
 
         return {
             imoveis,

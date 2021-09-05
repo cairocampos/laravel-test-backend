@@ -96,8 +96,8 @@ export default defineComponent({
 
         const salvarContrato = async () => {
             try {
-                // const response = await api.post('/contratos', contrato.value);
-                // successAlert(response.data.message);
+                const response = await api.post('/contratos', contrato.value);
+                successAlert(response.data.message);
 
                 emit('contrato-adicionado', props.contratoImovel.id);
             } catch (error) {
