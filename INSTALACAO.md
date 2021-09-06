@@ -33,4 +33,7 @@ docker-compose up -d
 # Abra o navegador e acesse o endereco http://localhost:8080
 ```
 
+### Tela inicial do projeto
+![Alt text](/images/tela01.jpeg)
+
 Cairo Campos
