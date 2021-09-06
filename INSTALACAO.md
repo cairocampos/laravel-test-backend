@@ -18,6 +18,9 @@ docker-compose exec app composer install
 # Configurar variáveis de ambiente
 cp .env.example .env
 docker-compose exec app php artisan key:generate
+
+# Executar as migrations
+docker-compose exec app php artisan migrate
 ```
 
 
